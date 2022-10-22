@@ -15,7 +15,7 @@
                 </ul>
             </div>
         @endif
-        <form action="{{route('basket')}}" method="POST">
+        <form action="{{route('basket')}}" method="POST" name="ordering">
             @csrf
             <div class="popup-body container-fluid p-0 d-flex flex-column align-items-center">
                 <div class="ordering-container">
@@ -40,15 +40,15 @@
                                     <div class="container-fluid p-0 d-flex flex-md-row flex-column justify-content-between">
                                         <div class="order-input medium mt-4">
                                             <p class="order-input-name">
-                                                Ваше ім'я
+                                                Номер телефону
                                             </p>
-                                            <input type="text" name="name">
+                                            <input type="text" onchange="writeClient()" name="phone">
                                         </div>
                                         <div class="order-input medium mt-4">
                                             <p class="order-input-name">
-                                                Номер телефону
+                                                Ваше ім'я
                                             </p>
-                                            <input type="text" name="phone">
+                                            <input type="text" name="name">
                                         </div>
                                     </div>
                                     <div class="container-fluid p-0 d-flex flex-wrap justify-content-between">
@@ -98,7 +98,8 @@
                             <div  class="order-section-content pb-4 ">
                                 <div class="payment-container ms-md-5 ms-3 d-flex flex-column align-items-center">
                                     <p class="order-text mt-1">
-                                        До сплати: <b class="ms-2">{{$total_price}} грн</b>
+                                        До сплати:
+                                        <b class="ms-2" id = "2">{{$total_price}}</b>
                                     </p>
                                     <p class="order-text mt-0">Введіть дані про карту:</p>
                                     <div class="debit-card p-4">
@@ -164,4 +165,6 @@
         </form>
     </div>
 </div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script src="../View/JS/ordering.js"></script>
+<script src="../View/JS/writeClient.js"></script>

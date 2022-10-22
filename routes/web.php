@@ -28,3 +28,7 @@ Route::post('/basket', [PostController::class, 'postBasket']);
 Route::post('/', [PostController::class, 'addToCartMain']);
 
 Route::post('/menu', [PostController::class, 'addToCartMenu']);
+
+Route::get('/api/ordering/{phone_number}', [MainController::class, 'ordering'])->name('ordering');
+
+Route::get('/api/ordering', [MainController::class, 'ordering_price'])->name('ordering_price');

@@ -102,5 +102,7 @@
             @endcomponent
         @endif
     </section>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="../View/JS/basket.js"></script>
+    <script src="../View/JS/writeClient.js"></script>
 @endsection

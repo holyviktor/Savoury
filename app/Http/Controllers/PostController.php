@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Client;
 use App\Models\Dish;
 use App\Models\Dish_of_the_day;
 use App\Models\Dish_Order;
@@ -28,22 +29,57 @@ class PostController extends Controller
         ]);
         $cookieData = $this->getCookies(json_decode($request->cookie('basket'), TRUE));
 
+//        $id = Order::insertGetId(
+//            array(
+//                'name'=>$request->input('name'),
+//                'phone_number'=>$request->input('phone'),
+//                'street'=>$request->input('street'),
+//                'house'=>$request->input('house'),
+//                'flat'=>$request->input('flat'),
+//                'comment'=>$request->input('comment'),
+//                'date'=>today()
+//            )
+//        );
+
+        $client_record = Client::where('phone_number', $request->input('phone'))->first();
+        if (!isset($client_record)){
+            Client::insert(
+                array(
+                    'name'=>$request->input('name'),
+                    'phone_number'=>$request->input('phone'),
+                    'street'=>$request->input('street'),
+                    'house'=>$request->input('house'),
+                    'flat'=>$request->input('flat'),
+                )
+            );
+        }else{
+
+            $client = Client::where("phone_number", $request->input('phone'));
+//            $client->name = $request->input('name');
+//            $client->house = $request->input('house');
+//            $client->street = $request->input('street');
+//            $client->flat = $request->input('flat');
+            $client->update(
+                array(
+                    'name'=>$request->input('name'),
+                    'street'=>$request->input('street'),
+                    'house'=>$request->input('house'),
+                    'flat'=>$request->input('flat'),
+                )
+            );
+        }
         $id = Order::insertGetId(
             array(
-                'name'=>$request->input('name'),
                 'phone_number'=>$request->input('phone'),
-                'street'=>$request->input('street'),
-                'house'=>$request->input('house'),
-                'flat'=>$request->input('flat'),
                 'comment'=>$request->input('comment'),
                 'date'=>today()
-            )
+                )
         );
         foreach ($cookieData['count'] as $dishId=>$count) {
             Dish_Order::insert(array(
                 'order_id' => $id,
                 'dish_id' => $dishId,
-                'count' => $count
+                'count' => $count,
             ));
         }
         $response = new Response();

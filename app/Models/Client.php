@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Client extends Model
 {
     use HasFactory;
-    public function dish_order(){
+    public $timestamps = false;
+    public function order(){
         return $this->hasMany(Dish_Order::class);
-    }
-    public function client(){
-        return $this->BelongsTo(Category::class);
     }
 }

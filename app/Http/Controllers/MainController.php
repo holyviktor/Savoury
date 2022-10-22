@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Client;
 use App\Models\Dish;
 use App\Models\Dish_of_the_day;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class MainController extends Controller
 {
@@ -65,5 +68,18 @@ class MainController extends Controller
         }
         return view('Pages/basket',
             $this->getCookies(json_decode($request->cookie('basket'), true)));
+    }
+
+    public function ordering($phone_number){
+//        $price = $this->getCookies(json_decode($request->cookie('basket')))["total_price"];
+//        dd($price);
+        $count = Order::where('phone_number', $phone_number)->count();
+        return [Client::where('phone_number', $phone_number)->first(), $count];
+    }
+
+    public function ordering_price(Request $request){
+        $price = $this->getCookies(json_decode($request->cookie('basket')))["total_price"];
+//        dd($price);
+        return $price;
     }
 }
